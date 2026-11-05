@@ -3,26 +3,38 @@ from character import Character
 
 def main():
     hero = Character("Knight", 30, 5)
-    enemy = Character("Goblin", 20, 3)
+    enemy1 = Character("Goblin", 20, 3)
+    enemy2 = Character("Orc", 15, 4)
+
+    enemies = [enemy1, enemy2]
 
     print(hero)
-    print(enemy)
+    for enemy in enemies:
+        print(enemy)
     print()
 
-    while hero.is_alive() and enemy.is_alive():
-        hero.attack(enemy)
-        if enemy.is_alive():
-            enemy.attack(hero)
+    while hero.is_alive() and any(enemy.is_alive() for enemy in enemies):
+        for enemy in enemies:
+            if not hero.is_alive():
+                break
+
+            if enemy.is_alive():
+                hero.attack(enemy)
+
+                if enemy.is_alive():
+                    enemy.attack(hero)
+
         print(hero)
-        print(enemy)
+        for enemy in enemies:
+            print(enemy)
         print()
 
     print("Battle over!")
     if hero.is_alive():
         print(f"{hero.name} wins!")
     else:
-        print(f"{enemy.name} wins!")
+        print("Enemies win!")
 
 
-if __name__ == "__main__":
+if name == "main":
     main()
